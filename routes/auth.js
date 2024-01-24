@@ -35,3 +35,28 @@ router.post("./token", async function (req, res, next) {
         t(err);
     }
 });
+
+//POST /auth/register: { user } => { token }
+
+//user must include { username, password, email, firstname, lastname }
+
+//Returns JWT token which can be used to authenticate further requests.
+//Auth req: none.
+
+router.post("/register", async function (req, res, next) {
+    try {
+        const validator = jsonschema.validate(req.body, userRegisterSchema);
+        if (!validator.valid) {
+            const errs = validator.errors.map((e) => e.stack);
+            throw new BadRequestError(errs);
+        }
+
+        const newUser = await User.register({ ...req.body });
+        const token = createToken(newUser);
+        return res.status(201).json({ token });
+    } catch (error) {
+        return next(error);
+    }
+});
+
+module.exports = router;

@@ -10,8 +10,7 @@ routes/auth.js
 
 
 next:
-helpers/sql.js
-db.js
+
 
 QUESTIONS
 -user model: is the finding decks at line 123 correct?
@@ -19,3 +18,5 @@ QUESTIONS
     -talk me through the partial update?
 
 -Review how helpers/sql.js does what it does
+
+auth.js: will line 54 work without isAdmin
