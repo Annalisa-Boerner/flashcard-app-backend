@@ -1,0 +1,19 @@
+Not present: 
+
+middleware/auth.test.js
+
+In process:
+
+app.js
+routes/auth.js
+
+
+
+next:
+helpers/sql.js
+db.js
+
+QUESTIONS
+-user model: is the finding decks at line 123 correct?
+-Is the use of password around 151 in the partial update correct?
+    -talk me through the partial update?
