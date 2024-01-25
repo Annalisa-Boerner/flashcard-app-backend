@@ -1,6 +1,6 @@
 ---Not present: ---
 -all test files
-
+-Procfile because it's specific to Heroku
 
 In process:
 
@@ -11,7 +11,7 @@ next:
 
 
 
-QUESTIONS
+--QUESTIONS---
 -user model: is the finding decks at line 123 correct?
 -Is the use of password around 151 in the partial update correct?
     -talk me through the partial update?
