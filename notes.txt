@@ -1,27 +1,29 @@
 ---Not present: ---
--all test files
-
+-all test files, including test section of flashcards.sql
+-Procfile because it's specific to Heroku
 
 In process:
 
--app.js
+-flashcard-schema and flashcard-seed because of schema Q
 
 
 next:
 
 
 
-QUESTIONS
+--QUESTIONS---
+-is there a .env file locally on your machine that it uses? I feel like they're usually gitignored
+
 -user model: is the finding decks at line 123 correct?
 -Is the use of password around 151 in the partial update correct?
     -talk me through the partial update?
 
 -Review how helpers/sql.js does what it does
 
+-card model: -learn how to do backend filters
+
 auth.js: will line 54 work without isAdmin
-
-
--is there a .env file locally on your machine that it uses? I feel like they're usually gitignored
 
 -should we make a model for decks or cards?
 -same Q with schemas
+
