@@ -20,7 +20,10 @@ next:
 
 -Review how helpers/sql.js does what it does
 
+-card model: -learn how to do backend filters
+
 auth.js: will line 54 work without isAdmin
 
 -should we make a model for decks or cards?
 -same Q with schemas
+
