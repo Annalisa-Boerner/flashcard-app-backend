@@ -7,6 +7,7 @@ require("colors");
 
 const SECRET_KEY = process.env.SECRET_KEY || "flash-those-cards";
 
+//Changes to Elephant Sequel database port when in production
 const PORT = +process.env.PORT || 3001;
 
 //Use dev db, testing db, or - via env var - production db
