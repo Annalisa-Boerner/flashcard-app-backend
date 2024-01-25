@@ -1,15 +1,14 @@
-Not present: 
+---Not present: ---
+-all test files
 
-middleware/auth.test.js
 
 In process:
 
-app.js
-routes/auth.js
-
+-app.js
 
 
 next:
+
 
 
 QUESTIONS
@@ -20,3 +19,9 @@ QUESTIONS
 -Review how helpers/sql.js does what it does
 
 auth.js: will line 54 work without isAdmin
+
+
+-is there a .env file locally on your machine that it uses? I feel like they're usually gitignored
+
+-should we make a model for decks or cards?
+-same Q with schemas
