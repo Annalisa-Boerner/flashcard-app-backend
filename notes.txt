@@ -12,6 +12,9 @@ next:
 
 
 --QUESTIONS---
+
+-how to run the seed file?
+
 -is there a .env file locally on your machine that it uses? I feel like they're usually gitignored
 
 -user model: is the finding decks at line 123 correct?
