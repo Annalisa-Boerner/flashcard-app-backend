@@ -5,6 +5,7 @@ const { NotFoundError } = require("../expressError");
 const { sqlForPartialUpdate } = require("../helpers/sql");
 
 //Related functions for cards
+
 class Card {
     //Create a card (from data), update db, return new card data
 
@@ -24,8 +25,6 @@ class Card {
     }
 
     //Find all cards (optional filter on searchFilters).
-
-    //DOES THIS FUNCTION SUCCESSFULLY AS A GET ALL USER DECKS IF USERNAME FILTER IS AUTOMATICALLY APPLIED?
 
     //Optional filters: username, deckname
 
