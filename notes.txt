@@ -29,7 +29,8 @@ CARD MODEL
 AUTH.JS
 auth.js: will line 54 work without isAdmin
 
--same Q with schemas
+THUNDER CLIENT  
+-how to run a get - where are our endpoints
 
 --ANSWERS---
 
