@@ -15,9 +15,8 @@ next:
 --QUESTIONS---
 
 USER MODEL: 
--is the finding decks at line 123 correct?
--Is the use of password around 151 in the partial update correct?
-    -talk me through the partial update?
+-is the finding cards at line 100ish correct?
+    -how does this return the whole object for ea. card?
 
 CARD SCHEMA
 -and frankly user schema: what's with the id

@@ -46,14 +46,7 @@ class User {
 
     //Throws BadRequestError on duplicates
 
-    static async register({
-        username,
-        password,
-        firstName,
-        lastName,
-        email,
-        isAdmin,
-    }) {
+    static async register({ username, password, firstName, lastName, email }) {
         const duplicateCheck = await db.query(
             `SELECT username
              FROM users
@@ -100,8 +93,8 @@ class User {
 
     //Given a username, return data about a user.
 
-    //Returns { username, email, firstname, lastname, decks}
-    //where decks is {deckname}
+    //Returns { username, email, firstname, lastname, cards}
+    //where cards  is { id, cardfront, cardback, deckname}
 
     //Throws NotFoundError if not found.
 
@@ -120,14 +113,14 @@ class User {
 
         if (!user) throw new NotFoundError(`No user: ${username}`);
 
-        const userDecksRes = await db.query(
-            `SELECT deck.deckname
-                 FROM decks AS a
-                 WHERE deck.username = $1`,
+        const userCardsRes = await db.query(
+            `SELECT card.id
+                 FROM cards
+                 WHERE card.username = $1`,
             [username]
         );
 
-        user.decks = userDecksRes.rows.map((deck) => deck.deckname);
+        user.cards = userCardsRes.rows.map((card) => card.id);
         return user;
     }
 
@@ -162,7 +155,7 @@ class User {
         const querySql = `UPDATE users
         SET ${setCols}
         WHERE username = ${usernameVarIdx}
-        RETURNING username, password, email, firstname, lastname`;
+        RETURNING username, email, firstname, lastname`;
         const result = await db.query(querySql, [...values, username]);
         const user = result.rows[0];
 
