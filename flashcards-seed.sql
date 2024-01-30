@@ -6,5 +6,5 @@ VALUES ('testuser1', '$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi
 
 --two cards per test deck
 
- INSERT INTO cards (cardfront, cardback, deckname)
- VALUES ('front1', 'back1', 'testdeck1'), ('front2', 'back2', 'testdeck1'), ('front1', 'back1', 'testdeck2'), ('front2', 'back2', 'testdeck2')
+ INSERT INTO cards (cardfront, cardback, deckname, username)
+ VALUES ('front1', 'back1', 'testdeck1', 'testuser1'), ('front2', 'back2', 'testdeck1', 'testuser1'), ('front1', 'back1', 'testdeck2', 'testuser2'), ('front2', 'back2', 'testdeck2', 'testuser2')
