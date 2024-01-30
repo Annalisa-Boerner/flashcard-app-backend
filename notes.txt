@@ -4,15 +4,15 @@
 
 In process:
 
--flashcard-schema and flashcard-seed because of schema Q
+-restart AB computer reseed
+-look at card schema
+-look at cards routes
 
 
 next:
 
 
 --QUESTIONS---
-
--is there a .env file locally on your machine that it uses? I feel like they're usually gitignored
 
 -user model: is the finding decks at line 123 correct?
 -Is the use of password around 151 in the partial update correct?
@@ -21,10 +21,10 @@ next:
 -Review how helpers/sql.js does what it does
 
 -card model: -learn how to do backend filters
+-how long do we want text to be?
 
 auth.js: will line 54 work without isAdmin
 
--should we make a model for decks or cards?
 -same Q with schemas
 
 --ANSWERS---
