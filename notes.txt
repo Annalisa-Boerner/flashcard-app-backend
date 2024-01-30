@@ -14,23 +14,27 @@ next:
 
 --QUESTIONS---
 
--user model: is the finding decks at line 123 correct?
--Is the use of password around 151 in the partial update correct?
-    -talk me through the partial update?
+USER MODEL: 
+-is the finding cards at line 100ish correct?
+    -how does this return the whole object for ea. card?
 
--Review how helpers/sql.js does what it does
+CARD SCHEMA
+-and frankly user schema: what's with the id
+-cardUpdate: made required an empty array on this one and also cardSearch
 
--card model: -learn how to do backend filters
+CARD MODEL
+-learn how to do backend filters
 -how long do we want text to be?
 
+AUTH.JS
 auth.js: will line 54 work without isAdmin
 
--same Q with schemas
+THUNDER CLIENT  
+-how to run a get - where are our endpoints
 
 --ANSWERS---
 
--how to run the seed file?
-
+-how to run the seed file:
 ----while in the directory: open psql and then, \i flashcards.sql
 ---don't forget our semicolons (syntax error)
 ---FKs in the schema do'nt need to be FOREIGN KEY, just use the keyword REFERENCES
