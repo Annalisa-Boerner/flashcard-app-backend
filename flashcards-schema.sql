@@ -11,6 +11,6 @@ CREATE TABLE cards (
     cardfront TEXT NOT NULL,
     cardback TEXT NOT NULL,
     deckname TEXT NOT NULL,
-    username    TEXT NOT NULL
+    username    TEXT NOT NULL REFERENCES users
 );
 
