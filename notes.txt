@@ -22,15 +22,6 @@ CARD SCHEMA
 -and frankly user schema: what's with the id
 -cardUpdate: made required an empty array on this one and also cardSearch
 
-CARD MODEL
--learn how to do backend filters
--how long do we want text to be?
-
-AUTH.JS
-auth.js: will line 54 work without isAdmin
-
-THUNDER CLIENT  
--how to run a get - where are our endpoints
 
 --ANSWERS---
 
@@ -38,3 +29,9 @@ THUNDER CLIENT
 ----while in the directory: open psql and then, \i flashcards.sql
 ---don't forget our semicolons (syntax error)
 ---FKs in the schema do'nt need to be FOREIGN KEY, just use the keyword REFERENCES
+
+--nodemon to keep server restarting when changes occur; new start script in package.json
+
+--token decoder: base64decode.org
+
+--sql queries for the card routes - single quotes around the values passed in while searching
