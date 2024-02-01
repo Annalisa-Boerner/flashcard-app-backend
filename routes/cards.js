@@ -1,6 +1,6 @@
 "use strict";
 
-const express = require("express");
+// const express = require("express");
 
 //Routes for cards
 
@@ -43,24 +43,25 @@ router.post("/", async function (req, res, next) {
  *
  * Can provide search filter in query:
  * - deckname
- * - username
-
+ * 
+ * Guaranteed to recieve the correct username in the request body (logic take place on frontend)
  */
 
 router.get("/", async function (req, res, next) {
-    const q = req.query;
-    // arrive as strings from querystring, but we want as int/bool
-    if (q.deckname !== undefined) q.deckname = +q.deckname;
-    q.username = q.username === "true";
+    const b = req.body;
+    let username = b.username;
+    let deckname = b.deckname;
 
+    
     try {
-        const validator = jsonschema.validate(q, cardSearchSchema);
-        if (!validator.valid) {
-            const errs = validator.errors.map((e) => e.stack);
-            throw new BadRequestError(errs);
-        }
+        console.log('username:', username, 'deckname:', deckname)
+        // const validator = jsonschema.validate(b, cardSearchSchema);
+        // if (!validator.valid) {
+        //     const errs = validator.errors.map((e) => e.stack);
+        //     throw new BadRequestError(errs);
+        // }
 
-        const cards = await Card.findAll(q);
+        const cards = await Card.findAll(username, deckname);
         return res.json({ cards });
     } catch (err) {
         return next(err);
@@ -106,7 +107,7 @@ router.patch("/:id", async function (req, res, next) {
 
 /** DELETE /[cardId] =>  { deleted: id }
  *
- * Authorization required: admin
+ * Authorization required: current user's card
  */
 
 router.delete("/:id", async function (req, res, next) {

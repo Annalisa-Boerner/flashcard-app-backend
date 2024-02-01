@@ -4,17 +4,12 @@ const { SECRET_KEY } = require("../config");
 //Return signed JWT from user data
 
 function createToken(user) {
-    console.assert(
-        user.isAdmin !== undefined,
-        "createToken passed user without isAdmin property"
-    );
-
+    console.log('insisde createToken')
     let payload = {
-        username: user.username,
-        isAdmin: user.isAdmin || false,
+        username: user.username
     };
 
     return jwt.sign(payload, SECRET_KEY);
 }
 
-module.export = { createToken };
+module.exports = { createToken };

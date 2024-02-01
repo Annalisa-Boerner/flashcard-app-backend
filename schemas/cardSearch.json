@@ -3,22 +3,12 @@
     "$id": "http://example.com/cardSearch.schema.json",
     "type": "object",
     "properties": {
-        "cardfront": {
+        "username": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 255
-        },
-        "cardback": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 255
+            "maxLength": 30
         },
         "deckname": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 255
-        },
-        "username": {
             "type": "string",
             "minLength": 1,
             "maxLength": 255

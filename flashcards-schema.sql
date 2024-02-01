@@ -2,8 +2,8 @@ CREATE TABLE users (
     username VARCHAR(255) PRIMARY KEY,
     password TEXT NOT NULL,
     email TEXT NOT NULL,
-    firstname TEXT NOT NULL,
-    lastname TEXT NOT NULL
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL
 );
 
 CREATE TABLE cards (

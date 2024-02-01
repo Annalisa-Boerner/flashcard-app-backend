@@ -1,6 +1,6 @@
 -- two test users with password "password"
 
-INSERT INTO users (username, password, email, firstname, lastname)
+INSERT INTO users (username, password, email, firstName, lastName)
 VALUES ('testuser1', '$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi5q', 'test@user1.com', 'test', 'user1'),
  ('testuser2', '$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi5q', 'test@user2.com', 'test', 'user2');
 

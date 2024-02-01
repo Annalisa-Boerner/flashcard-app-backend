@@ -2,7 +2,7 @@
 
 const db = require("../db");
 const bcrypt = require("bcrypt");
-const { sqlForPartialUpdate } = require("../helpers/sql");
+const {sqlForPartialUpdate  } = require("../helpers/sql");
 const {
     NotFoundError,
     BadRequestError,
@@ -16,14 +16,14 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 class User {
     //Authenticates user with username, password
 
-    //Returns { username, email, firstname, lastname }
+    //Returns { username, email, firstName, lastName }
 
     //Throws UnauthorizedError if user is not found or password is wrong
 
     static async authenticate(username, password) {
         //try to find the user first
         const result = await db.query(
-            `SELECT username, password, email, firstname, lastname FROM users WHERE username = $1`,
+            `SELECT username, password, email, firstName, lastName FROM users WHERE username = $1`,
             [username]
         );
 
@@ -42,11 +42,12 @@ class User {
 
     //Register user with data.
 
-    //Returns { username, email, firstname, lastname}
+    //Returns { username, email, firstName, lastName}
 
     //Throws BadRequestError on duplicates
 
     static async register({ username, password, firstName, lastName, email }) {
+        console.log('inside user model register')
         const duplicateCheck = await db.query(
             `SELECT username
              FROM users
@@ -65,11 +66,11 @@ class User {
              (username,
                 email,
               password,
-              firstname,
-              lastname)
+              firstName,
+              lastName)
              VALUES ($1, $2, $3, $4, $5)
-             RETURNING username, email, firstname, lastname`,
-            [username, email, hashedPassword, firstname, lastname]
+             RETURNING username, email, firstName, lastName`,
+            [username, email, hashedPassword, firstName, lastName]
         );
 
         const user = result.rows[0];
@@ -78,12 +79,12 @@ class User {
     }
 
     //Find all users
-    //Returns [{username, email, firstname, lastname}, ...]
+    //Returns [{username, email, firstName, lastName}, ...]
 
     static async findAll() {
         const result = await db.query(
             `SELECT username,
-                email, firstname, lastname
+                email, firstName, lastName
            FROM users
            ORDER BY username`
         );
@@ -93,7 +94,7 @@ class User {
 
     //Given a username, return data about a user.
 
-    //Returns { username, email, firstname, lastname, cards}
+    //Returns { username, email, firstName, lastName, cards}
     //where cards  is { id, cardfront, cardback, deckname}
 
     //Throws NotFoundError if not found.
@@ -102,8 +103,8 @@ class User {
         const userRes = await db.query(
             `SELECT username,
                           email,
-                          firstname,
-                          lastname
+                          firstName,
+                          lastName
                    FROM users
                    WHERE username = $1`,
             [username]
@@ -126,8 +127,8 @@ class User {
 
     //Update user data with `data` - partial update that only changes provided fields
 
-    //Data can include {password, email, firstname, lastname}
-    //Returns {username, email, firstname, lastname}
+    //Data can include {password, email, firstName, lastName}
+    //Returns {username, email, firstName, lastName}
 
     //Throws NotFoundError ifnot found.
     //WARNING: this function can set a new password.
@@ -145,8 +146,8 @@ class User {
         const { setCols, values } = sqlForPartialUpdate(data, {
             password: "password",
             email: "email",
-            firstname: "firstname",
-            lastname: "lastname",
+            firstName: "firstName",
+            lastName: "lastName",
         });
 
         //Used as a placeholder to prevent SQL injection attacks
@@ -155,7 +156,7 @@ class User {
         const querySql = `UPDATE users
         SET ${setCols}
         WHERE username = ${usernameVarIdx}
-        RETURNING username, email, firstname, lastname`;
+        RETURNING username, email, firstName, lastName`;
         const result = await db.query(querySql, [...values, username]);
         const user = result.rows[0];
 

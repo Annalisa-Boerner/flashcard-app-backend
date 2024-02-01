@@ -16,7 +16,7 @@ const { BadRequestError } = require("../expressError");
 
 //Returns JWT token which can be used to authenticate further requests. Auth required: none.
 
-router.post("./token", async function (req, res, next) {
+router.post("/token", async function (req, res, next) {
     try {
         const validator = jsonschema.validate(req.body, userAuthSchema);
         if (!validator.valid) {
@@ -31,8 +31,7 @@ router.post("./token", async function (req, res, next) {
         const token = createToken(user);
         return res.json({ token });
     } catch (err) {
-        return nex;
-        t(err);
+        return next(err);
     }
 });
 
@@ -44,14 +43,19 @@ router.post("./token", async function (req, res, next) {
 //Auth req: none.
 
 router.post("/register", async function (req, res, next) {
+    console.log('req', req)
     try {
+        console.log('about to validate')
         const validator = jsonschema.validate(req.body, userRegisterSchema);
+        console.log('validator:', validator)
         if (!validator.valid) {
             const errs = validator.errors.map((e) => e.stack);
             throw new BadRequestError(errs);
         }
-
+        console.log('Before User.register')
         const newUser = await User.register({ ...req.body });
+        console.log('type of createToken:', typeof(createToken))
+        console.log('Testing createToken error')
         const token = createToken(newUser);
         return res.status(201).json({ token });
     } catch (error) {

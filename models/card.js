@@ -24,13 +24,14 @@ class Card {
         return card;
     }
 
-    //Find all cards (optional filter on searchFilters).
-
-    //Optional filters: username, deckname
+    //Find all cards in the given deckname aand username.
 
     //Returns [{id, username, cardfront, cardback, deckname}, ...]
 
-    static async findAll({ username, deckname } = {}) {
+    static async findAll(username, deckname) {
+        console.log('username:', username, 'deckname:', deckname)
+
+
         let query = `SELECT c.id, c.username, c.cardfront, c.cardback, c.deckname
             FROM cards c`;
         let whereExpressions = [];
@@ -40,21 +41,23 @@ class Card {
 
         if (username !== undefined) {
             queryValues.push(username);
-            whereExpressions.push(`username = ${username}`);
+            whereExpressions.push(`username = '${username}'`);
         }
 
         if (deckname != undefined) {
             queryValues.push(deckname);
-            whereExpressions.push(`deckname = ${deckname}`);
+            whereExpressions.push(`deckname = '${deckname}'`);
         }
 
         if (whereExpressions.length > 0) {
             query += " WHERE " + whereExpressions.join(" AND ");
         }
 
+        console.log('query:', query)
+        console.log('query type:', typeof(query));
         //Finalize query and return results
 
-        const cardsRes = await db.query(query, queryValues);
+        const cardsRes = await db.query(query);
         return cardsRes.rows;
     }
 
