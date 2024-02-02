@@ -14,9 +14,10 @@ next:
 
 --QUESTIONS---
 
-USER MODEL: 
+USER MODEL: decide whether we want to find cards via card model or user model 
 -is the finding cards at line 100ish correct?
-    -how does this return the whole object for ea. card?
+    -how does this return the whole object for ea. card?-
+    -
 
 CARD SCHEMA
 -and frankly user schema: what's with the id
