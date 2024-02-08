@@ -43,7 +43,7 @@ router.post("/", async function (req, res, next) {
  *
  * Can provide search filter in query:
  * - deckname
- * 
+ *
  * Guaranteed to recieve the correct username in the request body (logic take place on frontend)
  */
 
@@ -52,9 +52,8 @@ router.get("/", async function (req, res, next) {
     let username = b.username;
     let deckname = b.deckname;
 
-    
     try {
-        console.log('username:', username, 'deckname:', deckname)
+        console.log("username:", username, "deckname:", deckname);
         // const validator = jsonschema.validate(b, cardSearchSchema);
         // if (!validator.valid) {
         //     const errs = validator.errors.map((e) => e.stack);
@@ -68,23 +67,8 @@ router.get("/", async function (req, res, next) {
     }
 });
 
-/** GET /[cardId] => { card }
- *
- * Returns { id, cardfront, cardback, deckname, username }
-
- */
-
-router.get("/:id", async function (req, res, next) {
-    try {
-        const card = await Card.get(req.params.id);
-        return res.json({ card });
-    } catch (err) {
-        return next(err);
-    }
-});
-
 /** PATCH /[cardId]  { fld1, fld2, ... } => { card }
- *
+ * NOT IN MVP
  * Data can include: { cardfront, cardback, deckname}
  *
  * Returns {  id, cardfront, cardback, deckname, username }
@@ -106,7 +90,7 @@ router.patch("/:id", async function (req, res, next) {
 });
 
 /** DELETE /[cardId] =>  { deleted: id }
- *
+ * NOT IN MVP
  * Authorization required: current user's card
  */
 
