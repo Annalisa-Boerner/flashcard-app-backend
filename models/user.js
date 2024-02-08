@@ -2,7 +2,7 @@
 
 const db = require("../db");
 const bcrypt = require("bcrypt");
-const {sqlForPartialUpdate  } = require("../helpers/sql");
+const { sqlForPartialUpdate } = require("../helpers/sql");
 const {
     NotFoundError,
     BadRequestError,
@@ -47,7 +47,7 @@ class User {
     //Throws BadRequestError on duplicates
 
     static async register({ username, password, firstName, lastName, email }) {
-        console.log('inside user model register')
+        console.log("inside user model register");
         const duplicateCheck = await db.query(
             `SELECT username
              FROM users
@@ -109,19 +109,18 @@ class User {
                    WHERE username = $1`,
             [username]
         );
-
         const user = userRes.rows[0];
 
         if (!user) throw new NotFoundError(`No user: ${username}`);
 
-        const userCardsRes = await db.query(
-            `SELECT card.id
-                 FROM cards
-                 WHERE card.username = $1`,
-            [username]
-        );
+        // const userCardsRes = await db.query(
+        //     `SELECT card.id
+        //          FROM cards
+        //          WHERE card.username = $1`,
+        //     [username]
+        // );
 
-        user.cards = userCardsRes.rows.map((card) => card.id);
+        // user.cards = userCardsRes.rows.map((card) => card.id);
         return user;
     }
 
