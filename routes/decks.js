@@ -8,30 +8,28 @@ const jsonschema = require("jsonschema");
 
 const express = require("express");
 const { BadRequestError } = require("../expressError");
-const Card = require("../models/card");
-const cardNewSchema = require("../schemas/cardNew.json");
-const cardUpdateSchema = require("../schemas/cardUpdate.json");
-const cardSearchSchema = require("../schemas/cardSearch.json");
+const Deck = require("../models/deck");
+const deckNewSchema = require("../schemas/deckNew.json");
 
 const router = express.Router({ mergeParams: true });
 
-/** POST / { card } => { card }
+/** POST / { deck } => { deck }
  *
- * card should be {cardfront, cardback, deckname, username }
+ * deck should be { deckname, username }
  *
- * Returns { id, cardfront, cardback, deckname, username }
+ * Returns { deckname, username }
  *
  */
 
 router.post("/", async function (req, res, next) {
     try {
-        const validator = jsonschema.validate(req.body, cardNewSchema);
+        const validator = jsonschema.validate(req.body, deckNewSchema);
         if (!validator.valid) {
             const errs = validator.errors.map((e) => e.stack);
             throw new BadRequestError(errs);
         }
 
-        const card = await Card.create(req.body);
+        const deck = await Deck.create(req.body);
         return res.status(201).json({ card });
     } catch (err) {
         return next(err);
@@ -39,10 +37,9 @@ router.post("/", async function (req, res, next) {
 });
 
 /** GET / =>
- *   { cards: [ { id, cardfront, cardback, deckname, username }, ...] }
+ *   { decks: [ { id, cardfront, cardback, deckname, username }, ...], [{ id, cardfront, cardback, deckname, username }, { id, cardfront, cardback, deckname, username }] }
  *
- * Can provide search filter in query:
- * - deckname
+ * Get all decks for a user
  *
  * Guaranteed to recieve the correct username in the request body (logic take place on frontend)
  */
@@ -50,17 +47,16 @@ router.post("/", async function (req, res, next) {
 router.get("/", async function (req, res, next) {
     const b = req.body;
     let username = b.username;
-    let deckname = b.deckname;
 
     try {
         console.log("username:", username, "deckname:", deckname);
-        const validator = jsonschema.validate(b, cardSearchSchema);
+        const validator = jsonschema.validate(b, deckSearchSchema);
         if (!validator.valid) {
             const errs = validator.errors.map((e) => e.stack);
             throw new BadRequestError(errs);
         }
 
-        const cards = await Card.findAll(username, deckname);
+        const decks = await Deck.findAll(username, deckname);
         return res.json({ cards });
     } catch (err) {
         return next(err);

@@ -24,6 +24,22 @@ class Deck {
         return card;
     }
 
+    //Find all decks for a given user.
+
+    //Returns [deckname, deckname, ...]
+
+    static async findAll(username) {
+      console.log('username:', username)
+
+      let query = `SELECT d.deckname
+          FROM decks d
+          WHERE username = ${username}`;
+
+      const decksRes = await db.query(query);
+      return decksRes.rows;
+  }
+
+
 
     /** Delete given deck from database; returns { name, username }
      *
