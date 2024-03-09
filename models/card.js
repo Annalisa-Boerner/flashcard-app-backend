@@ -9,16 +9,16 @@ const { sqlForPartialUpdate } = require("../helpers/sql");
 class Card {
     //Create a card (from data), update db, return new card data
 
-    //Data should be { username, cardfront, cardback, deckname }
+    //Data should be { cardfront, cardback, deckname, username }
 
-    //Returns {id, username, cardfront, cardback, deckname }
+    //Returns {id, cardfront, cardback, deckname, username }
 
     static async create(data) {
         const result = await db.query(
-            `INSERT INTO cards (username, cardfront, cardback, deckname)
+            `INSERT INTO cards (cardfront, cardback, deckname, username)
             VALUES ($1, $2, $3, $4)
-            RETURNING id, username, cardfront, cardback, deckname`,
-            [data.username, data.cardfront, data.cardback, data.deckname]
+            RETURNING id, cardfront, cardback, deckname, username`,
+            [data.cardfront, data.cardback, data.deckname, data.username]
         );
         let card = result.rows[0];
         return card;
@@ -26,13 +26,13 @@ class Card {
 
     //Find all cards in the given deckname aand username.
 
-    //Returns [{id, username, cardfront, cardback, deckname}, ...]
+    //Returns [{id, cardfront, cardback, deckname, username}, ...]
 
     static async findAll(username, deckname) {
         console.log('username:', username, 'deckname:', deckname)
 
 
-        let query = `SELECT c.id, c.username, c.cardfront, c.cardback, c.deckname
+        let query = `SELECT c.id, c.cardfront, c.cardback, c.deckname, c.username
             FROM cards c`;
         let whereExpressions = [];
         let queryValues = [];
