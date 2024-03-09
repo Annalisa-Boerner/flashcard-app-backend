@@ -1,7 +1,5 @@
 "use strict";
 
-const express = require("express");
-
 //Routes for cards
 
 const jsonschema = require("jsonschema");
