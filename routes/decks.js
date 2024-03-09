@@ -1,7 +1,5 @@
 "use strict";
 
-const express = require("express");
-
 //Routes for cards
 
 const jsonschema = require("jsonschema");
@@ -10,6 +8,7 @@ const express = require("express");
 const { BadRequestError } = require("../expressError");
 const Deck = require("../models/deck");
 const deckNewSchema = require("../schemas/deckNew.json");
+const deckSearchSchema = require("../schemas/deckSearch")
 
 const router = express.Router({ mergeParams: true });
 
@@ -30,7 +29,7 @@ router.post("/", async function (req, res, next) {
         }
 
         const deck = await Deck.create(req.body);
-        return res.status(201).json({ card });
+        return res.status(201).json({ deck });
     } catch (err) {
         return next(err);
     }
@@ -49,54 +48,41 @@ router.get("/", async function (req, res, next) {
     let username = b.username;
 
     try {
-        console.log("username:", username, "deckname:", deckname);
         const validator = jsonschema.validate(b, deckSearchSchema);
         if (!validator.valid) {
             const errs = validator.errors.map((e) => e.stack);
             throw new BadRequestError(errs);
         }
 
-        const decks = await Deck.findAll(username, deckname);
-        return res.json({ cards });
+        const decks = await Deck.findAll(username);
+        return res.json({ decks });
     } catch (err) {
         return next(err);
     }
 });
 
-/** PATCH /[cardId]  { fld1, fld2, ... } => { card }
- * NOT IN MVP
- * Data can include: { cardfront, cardback, deckname}
+/** DELETE /:deckname/:username => { deleted: deckname }
+ * 
+ * Deletes the deck identified by deckname and username.
  *
- * Returns {  id, cardfront, cardback, deckname, username }
+ * Returns { deleted: deckname } on success.
+ *
+ * Throws NotFoundError if the deck is not found.
  */
 
-router.patch("/:id", async function (req, res, next) {
-    try {
-        const validator = jsonschema.validate(req.body, cardUpdateSchema);
-        if (!validator.valid) {
-            const errs = validator.errors.map((e) => e.stack);
-            throw new BadRequestError(errs);
-        }
+router.delete("/", async function(req, res, next) {
+  try {
+      const { deckname, username } = req.body;
+      console.log(`Attempting to delete deck: '${deckname}' for user: '${username}'`);
 
-        const card = await Card.update(req.params.id, req.body);
-        return res.json({ card });
-    } catch (err) {
-        return next(err);
-    }
+      await Deck.remove(deckname, username);
+      return res.json({ deleted: deckname });
+  } catch (err) {
+      return next(err);
+  }
 });
 
-/** DELETE /[cardId] =>  { deleted: id }
- * NOT IN MVP
- * Authorization required: current user's card
- */
 
-router.delete("/:id", async function (req, res, next) {
-    try {
-        await Card.remove(req.params.id);
-        return res.json({ deleted: +req.params.id });
-    } catch (err) {
-        return next(err);
-    }
-});
+
 
 module.exports = router;

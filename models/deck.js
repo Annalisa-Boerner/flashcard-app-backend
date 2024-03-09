@@ -17,11 +17,11 @@ class Deck {
         const result = await db.query(
             `INSERT INTO decks (name, username)
             VALUES ($1, $2)
-            RETURNING id, name, username`,
-            [data.deckname, data.username]
+            RETURNING name, username`,
+            [data.name, data.username]
         );
         let deck = result.rows[0];
-        return card;
+        return deck;
     }
 
     //Find all decks for a given user.
@@ -29,16 +29,13 @@ class Deck {
     //Returns [deckname, deckname, ...]
 
     static async findAll(username) {
-      console.log('username:', username)
-
-      let query = `SELECT d.deckname
-          FROM decks d
-          WHERE username = ${username}`;
-
-      const decksRes = await db.query(query);
-      return decksRes.rows;
+      console.log('username:', username);
+  
+      let query = `SELECT name FROM decks WHERE username = $1`;
+  
+      const decksRes = await db.query(query, [username]);
+      return decksRes.rows.map(row => row.name);
   }
-
 
 
     /** Delete given deck from database; returns { name, username }

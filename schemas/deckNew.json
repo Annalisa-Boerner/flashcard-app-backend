@@ -3,7 +3,7 @@
   "$id": "http://example.com/deckNew.schema.json",
   "type": "object",
   "properties": {
-      "deckname": {
+      "name": {
           "type": "string",
           "minLength": 1,
           "maxLength": 255
@@ -16,7 +16,7 @@
   },
   "additionalProperties": false,
   "required": [
-      "deckname",
+      "name",
       "username"
   ]
 }
