@@ -1,3 +1,22 @@
+3/1/24
+Each user can only add one deck of name X
+(Another user could have a deck named X)
+Given username Y, if deckname X exists already on a card:
+    Non-mvp: alert "do you want to add to a preexisting deck?"
+    MVP: error message: deck already exists
+
+Backend Option:
+In a schema with DeckId, DeckId+UserId combo would be unique (decks_users junction table)
+    DeckId is a PK increasing
+    UserId is an FK but part of the primary key
+    -Backends might be built by someone different from the person who designs the frontend, so this is how you establish what the back end will/can do
+
+In current schema:
+    We can't prevent adding multiple cards with the same deckname because that defeats the purpose of a deck
+
+Frontend Option:
+    When submitting, check if deck already exists for user then prevent submitting if yes
+
 ---Not present: ---
 -all test files, including test section of flashcards.sql
 -Procfile because it's specific to Heroku
