@@ -44,11 +44,10 @@ router.post("/", async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
-    const b = req.body;
-    let username = b.username;
-
+    const username = req.query.username;
+    const usernameObj = { "username": username }
     try {
-        const validator = jsonschema.validate(b, deckSearchSchema);
+        const validator = jsonschema.validate(usernameObj, deckSearchSchema);
         if (!validator.valid) {
             const errs = validator.errors.map((e) => e.stack);
             throw new BadRequestError(errs);
@@ -70,16 +69,16 @@ router.get("/", async function (req, res, next) {
  * Throws NotFoundError if the deck is not found.
  */
 
-router.delete("/", async function(req, res, next) {
-  try {
-      const { deckname, username } = req.body;
-      console.log(`Attempting to delete deck: '${deckname}' for user: '${username}'`);
+router.delete("/", async function (req, res, next) {
+    try {
+        const { deckname, username } = req.body;
+        console.log(`Attempting to delete deck: '${deckname}' for user: '${username}'`);
 
-      await Deck.remove(deckname, username);
-      return res.json({ deleted: deckname });
-  } catch (err) {
-      return next(err);
-  }
+        await Deck.remove(deckname, username);
+        return res.json({ deleted: deckname });
+    } catch (err) {
+        return next(err);
+    }
 });
 
 

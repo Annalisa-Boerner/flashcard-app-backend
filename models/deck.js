@@ -29,13 +29,13 @@ class Deck {
     //Returns [deckname, deckname, ...]
 
     static async findAll(username) {
-      console.log('username:', username);
-  
-      let query = `SELECT name FROM decks WHERE username = $1`;
-  
-      const decksRes = await db.query(query, [username]);
-      return decksRes.rows.map(row => row.name);
-  }
+        console.log('username in findAll (backend):', username);
+
+        let query = `SELECT name FROM decks WHERE username = $1`;
+
+        const decksRes = await db.query(query, [username]);
+        return decksRes.rows.map(row => row.name);
+    }
 
 
     /** Delete given deck from database; returns { name, username }
@@ -44,18 +44,18 @@ class Deck {
      **/
 
     static async remove(deckname, username) {
-      const result = await db.query(
-          `DELETE FROM decks
+        const result = await db.query(
+            `DELETE FROM decks
           WHERE name = $1 AND username = $2
           RETURNING name, username`,
-          [deckname, username]
-      );
-  
-      if (result.rows.length === 0) {
-          throw new NotFoundError(`No deck: ${deckname} found for user: ${username}`);
-      }
-  }
-  
+            [deckname, username]
+        );
+
+        if (result.rows.length === 0) {
+            throw new NotFoundError(`No deck: ${deckname} found for user: ${username}`);
+        }
+    }
+
 }
 
 
