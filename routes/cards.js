@@ -40,30 +40,33 @@ router.post("/", async function (req, res, next) {
  *   { cards: [ { id, cardfront, cardback, deckname, username }, ...] }
  *
  * Can provide search filter in query:
- * - deckname
+ * - username + deckname
  *
- * Guaranteed to recieve the correct username in the request body (logic take place on frontend)
+ * Recieves correct username and deckname in the request query string
  */
 
 router.get("/", async function (req, res, next) {
-    const b = req.body;
-    let username = b.username;
-    let deckname = b.deckname;
+    // Extract username and deckname from the query string
+    let username = req.query.username;
+    let deckname = req.query.deckname;
 
     try {
-        console.log("username:", username, "deckname:", deckname);
-        const validator = jsonschema.validate(b, cardSearchSchema);
+        const queryData = { username, deckname };
+        const validator = jsonschema.validate(queryData, cardSearchSchema);
+        
         if (!validator.valid) {
-            const errs = validator.errors.map((e) => e.stack);
+            const errs = validator.errors.map(e => e.stack);
             throw new BadRequestError(errs);
         }
 
+        // Find cards using the query parameters
         const cards = await Card.findAll(username, deckname);
         return res.json({ cards });
     } catch (err) {
         return next(err);
     }
 });
+
 
 /** PATCH /[cardId]  { fld1, fld2, ... } => { card }
  * NOT IN MVP
